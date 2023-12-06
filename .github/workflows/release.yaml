@@ -34,7 +34,6 @@ jobs:
       - name: Build
         id: build
         run: |
-          npm run build
           npm run build > build.txt
           apk_path=$(grep "https://expo.dev/artifacts/eas/" build.txt)
           echo "APK_PATH=$apk_path" >> $GITHUB_OUTPUT
