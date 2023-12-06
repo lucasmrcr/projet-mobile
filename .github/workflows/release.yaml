@@ -1,0 +1,51 @@
+name: Release CI
+run-name: Deploy version ${{ github.ref_name }}
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+# cancel workflow when there is already one launched
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup project
+        uses: ./.github/actions/setup-project
+      - name: Test project
+        uses: ./.github/actions/test-project
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup project
+        uses: ./.github/actions/setup-project
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+      - name: Build app
+        run: npm run build
+      - name: Build
+        id: build
+        run: |
+          npm run build > build.txt
+          apk_path=$(grep "https://expo.dev/artifacts/eas/" build.txt)
+          echo "APK_PATH=$apk_path" >> $GITHUB_OUTPUT
+      - name: Download apk on server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          script: |
+            mkdir -p ~/projet-mobile
+            cd ~/projet-mobile
+            curl -o app-${{ github.ref_name }}.apk ${{ steps.build.outputs.APK_PATH }}

@@ -1,0 +1,19 @@
+
+> projet-mobile@1.0.0 build
+> eas build --non-interactive -p android --profile production
+
+Loaded "env" configuration for the "production" profile: no environment variables specified. Learn more: https://docs.expo.dev/build-reference/variables/
+√ Using remote Android credentials (Expo server)
+√ Using Keystore from configuration: Build Credentials ycXsAwgqPM (default)
+
+Compressing project files and uploading to EAS Build. Learn more: https://expo.fyi/eas-build-archive
+√ Uploaded to EAS
+
+Build details: https://expo.dev/accounts/lucasmrcr/projects/projet-mobile/builds/92d5a732-a91f-4f83-a276-cea232489626
+
+Waiting for build to complete. You can press Ctrl+C to exit.
+√ Build finished
+
+🤖 Android app:
+https://expo.dev/artifacts/eas/j8Df1aYz3VmHjN3LRWbPiy.apk
+
