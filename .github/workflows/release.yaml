@@ -35,9 +35,8 @@ jobs:
         id: build
         run: |
           npm run build
-          pwd
           mv *.apk app-${{ github.ref_name }}.apk
-      - name: Download apk on server
+      - name: Prepare remote server
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.HOST }}
