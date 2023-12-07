@@ -45,15 +45,20 @@ jobs:
         id: build
         run: |
           npm run build
-          # apk_path=$(grep "https://expo.dev/artifacts/eas/" build.txt)
-          # echo "APK_PATH=$apk_path" >> $GITHUB_OUTPUT
+          mv /home/runner/work/projet-mobile/projet-mobile/*.apk app-${{ github.ref_name }}.apk
       - name: Download apk on server
-        uses: appleboy/ssh-action@v1.0.0
+        uses: appleboy/scp-action@v1.0.0
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script: |
             mkdir -p ~/mobile
-            cd ~/mobile
-            curl -o app-${{ github.ref_name }}.apk ${{ steps.build.outputs.APK_PATH }}
+      - name: Copy build package file
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          source: app-${{ github.ref_name }}.apk
+          target: ~/mobile
