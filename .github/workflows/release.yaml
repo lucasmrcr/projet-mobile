@@ -44,9 +44,9 @@ jobs:
       - name: Build
         id: build
         run: |
-          npm run build > build.txt
-          apk_path=$(grep "https://expo.dev/artifacts/eas/" build.txt)
-          echo "APK_PATH=$apk_path" >> $GITHUB_OUTPUT
+          npm run build
+          # apk_path=$(grep "https://expo.dev/artifacts/eas/" build.txt)
+          # echo "APK_PATH=$apk_path" >> $GITHUB_OUTPUT
       - name: Download apk on server
         uses: appleboy/ssh-action@v1.0.0
         with:
