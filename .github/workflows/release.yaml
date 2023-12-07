@@ -45,7 +45,8 @@ jobs:
         id: build
         run: |
           npm run build
-          mv /home/runner/work/projet-mobile/projet-mobile/*.apk app-${{ github.ref_name }}.apk
+          pwd
+          mv *.apk app-${{ github.ref_name }}.apk
       - name: Download apk on server
         uses: appleboy/scp-action@v1.0.0
         with:
