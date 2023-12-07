@@ -44,6 +44,6 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script: |
-            mkdir -p ~/projet-mobile
-            cd ~/projet-mobile
+            mkdir -p ~/mobile
+            cd ~/mobile
             curl -o app-${{ github.ref_name }}.apk ${{ steps.build.outputs.APK_PATH }}

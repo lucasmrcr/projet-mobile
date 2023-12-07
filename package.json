@@ -8,7 +8,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest",
-    "build": "eas build --non-interactive -p android --profile production"
+    "build": "eas build --non-interactive -p android --profile production --local"
   },
   "dependencies": {
     "expo": "~49.0.15",
